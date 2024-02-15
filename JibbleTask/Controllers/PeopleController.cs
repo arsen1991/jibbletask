@@ -33,6 +33,8 @@ namespace JibbleTask.Controllers
                 return BadRequest(ModelState);
             }
 
+            person.CreatedDate = DateTime.UtcNow;
+
             context.People.Add(person);
             await context.SaveChangesAsync();
             return Created(person);
@@ -51,6 +53,7 @@ namespace JibbleTask.Controllers
                 return NotFound();
             }
 
+            entity.LastModifiedDate = DateTime.UtcNow;
             product.Patch(entity);
             try
             {
@@ -84,6 +87,7 @@ namespace JibbleTask.Controllers
             }
 
             context.Entry(update).State = EntityState.Modified;
+            update.LastModifiedDate = DateTime.UtcNow;
             try
             {
                 await context.SaveChangesAsync();
